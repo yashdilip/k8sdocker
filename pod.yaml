@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8sdocker-pod
+  labels:
+    app: k8sdocker
+spec:
+  containers:
+    - name: k8sdocker-container
+      image: k8sdocker
+      imagePullPolicy: Never

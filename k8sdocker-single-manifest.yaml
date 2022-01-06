@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8sdocker-deployment
+  labels:
+    app: k8sdocker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8sdocker
+  template:
+    metadata:
+      labels:
+        app: k8sdocker
+    spec:
+      containers:
+        - name: k8sdocker-container
+          image: k8sdocker
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+              name: "http"
+            - containerPort: 5005
+              name: "debug"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8sdocker-service
+spec:
+  selector:
+    app: k8sdocker
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
